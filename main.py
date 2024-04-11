@@ -1,4 +1,5 @@
 import sys
+
 '''
 ADD, UPDATE, LIST, REMOVE, EXIT.
 in order to make the code easier to understand, I'm going to write a seperate 
@@ -11,10 +12,11 @@ def addTask(tasks):
     #1.prompts for the name of the task
     nameTask = input("Enter the name of the task you want to add: ")
     #2.check if the task exists already, if so, display an error message instead
-    for task in tasks:
-        if task['name'] == nameTask:
-            print("The task already exists.")
-
+    if tasks:
+        for task in tasks:
+            if task['name'] == nameTask:
+             print("The task already exists.")
+    
     #3.promt for the description otherwise
     descTask = input("Enter the description of the task: ")
     newTask = {
@@ -31,14 +33,16 @@ def updateTask(tasks):
     nameUpdated = input("Enter the name for the command you want to update: ")
     
     #loop the tasks in the list, if we find we prompt for a new description and change the previous one 
-    for task in tasks:
-        if task["name"] == nameUpdated:
-            descUpdated = input("Enter the new description: ")
-            task["description"] = descUpdated
-            break ;
-        else :
-            print("The task doesn't exist")
-
+    if tasks:
+        for task in tasks:
+            if task["name"] == nameUpdated:
+                descUpdated = input("Enter the new description: ")
+                task["description"] = descUpdated
+                break ;
+            else :
+                print("The task doesn't exist")
+    else :
+        print("The list is empty")
 
 #Function to list the tasks
 def listTasks(tasks):
@@ -55,19 +59,20 @@ def removeTask(tasks):
     #prompt for the name of the task and check if it exists in the list
     taskRemoved = input("Enter the name of the task you want to remove: ")
     removed = False
-    for task in tasks:
-        if task["name"] == taskRemoved:
-            tasks.remove(task)
-            print("The task has been removed")
-            remove = True
-            break ; 
+    if tasks:
+        for task in tasks:
+            if task["name"] == taskRemoved:
+                tasks.remove(task)
+                print("The task has been removed")
+                remove = True
+                break ; 
     if removed == False:
         print("Error: the task doesn't exist.")
     #i used a bool variable to check if the task was removed or not, in order to handle the error
 
 def main():
-    tasks = [{"name": "test1", "description": "test1"}]
-    
+    #tasks = [{"name" : "test1", "description" : "test1"}]
+    tasks = []
     command = input("Enter the command: ")
     while not command.upper() == "EXIT":
         if command.upper() == "ADD":
